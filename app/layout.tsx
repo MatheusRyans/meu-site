@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { MascotRobot } from "@/components/layout/MascotRobot";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://meusite.example.com"),
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body>
         <Header />
         <main className="page-shell">{children}</main>
+        <MascotRobot />
         <Footer />
       </body>
     </html>

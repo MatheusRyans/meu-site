@@ -32,52 +32,48 @@ export default function HomePage() {
 
   return (
     <div className="container home-page">
-      <section className="hero-section">
-        <div className="hero-copy">
-          <h1>Um mapa prático para aprender tecnologia com foco.</h1>
-          <p className="lead">
-            Reúno artigos, vídeos, plataformas e projetos que valem a pena seguir para construir uma base sólida em desenvolvimento e produto digital.
-          </p>
+      <section className="hero-editorial">
+        <aside className="hero-meta-left">
+          <p>Baseado em São Paulo, Brasil</p>
+          <p>Curadoria para devs em evolução constante</p>
+        </aside>
 
-          <div className="hero-stats" aria-label="Resumo do site">
-            <div>
-              <strong>+80</strong>
-              <span>recursos</span>
-            </div>
-            <div>
-              <strong>4</strong>
-              <span>áreas</span>
-            </div>
-            <div>
-              <strong>1</strong>
-              <span>curadoria</span>
+        <div className="hero-center-stage">
+          <div className="hero-title-block">
+            <p className="hero-name-kicker">Matheus</p>
+            <h1>Ryans</h1>
+          </div>
+
+          <div className="hero-avatar-shell" aria-hidden="true">
+            <div className="hero-avatar-dot" />
+            <div className="hero-avatar-figure">
+              <span />
             </div>
           </div>
 
-          <div className="cta-row">
-            <Link href="/blog" className="primary-button">
-              Ler artigos
-            </Link>
-            <Link href="/recursos" className="secondary-button">
-              Explorar recursos
-            </Link>
+          <div className="hero-role-block">
+            <p>
+              <strong>Curador técnico</strong>
+            </p>
+            <p>Organizando referências práticas para quem quer aprender com clareza.</p>
+            <div className="cta-row">
+              <Link href="/blog" className="primary-button">
+                Ler artigos
+              </Link>
+              <Link href="/recursos" className="secondary-button">
+                Explorar recursos
+              </Link>
+            </div>
           </div>
         </div>
 
-        <aside className="hero-panel" aria-label="Mapa do conteúdo">
-          <p className="panel-label">O que você encontra aqui</p>
-          <ul className="panel-list">
-            {focusAreas.map((area) => (
-              <li key={area.label}>
-                <strong>{area.label}</strong>
-                <span>{area.description}</span>
-              </li>
-            ))}
-          </ul>
-          <Link href="/recursos" className="panel-link">
-            Ver recursos completos
-          </Link>
-        </aside>
+        <div className="hero-bottom-strip" aria-label="Últimas publicações">
+          {recent.map((entry) => (
+            <Link key={entry.slug} href={entry.type === "blog" ? `/blog/${entry.slug}` : `/recursos/${entry.slug}`}>
+              {entry.title}
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="section-block">
