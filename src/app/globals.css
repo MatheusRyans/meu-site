@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   DESIGN TOKENS — extraídos do site de referência (ver docs/)
+   ========================================================================== */
+@theme inline {
+  /* Marca / editorial */
+  /* Paleta: #000000 · #FFFFFF · #8C00F2 (+ tons derivados do roxo) */
+  --color-ink: #ffffff;
+  --color-cream: #0a0612;
+  --color-paper: #0d0818;
+  --color-violet: #8c00f2;
+  --color-gold: #b565ff;
+  --color-gold-deep: #b565ff;
+  --color-bronze: #2a0a4d;
+
+  /* Terminal (perfil técnico) */
+  --color-term-bg: #050308;
+  --color-term-panel: #0d0816;
+  --color-term-line: #24173a;
+  --color-term-text: #e2e4e8;
+  --color-term-bright: #f7f8f9;
+  --color-term-muted: #a4a8b0;
+  --color-term-dim: #8b9098;
+  --color-term-amber: #c58cff;
+  --color-term-blue: #dcc0ff;
+  --color-term-green: #e3c9ff;
+  --color-term-red: #e97063;
+
+  /* Tipografia */
+  --font-display: var(--font-space), system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-editorial: var(--font-space), system-ui, sans-serif;
+
+  /* Motion */
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  background: #000;
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-violet);
+  color: #fff;
+}
+
+/* ==========================================================================
+   Loading overlay — três caixas pulsando em sequência
+   ========================================================================== */
+@keyframes loader-box {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+.loader-box {
+  width: 6px;
+  height: 28px;
+  background: currentColor;
+  transform-origin: center;
+  animation: loader-box 1s var(--ease-reveal) infinite;
+}
+.loader-box:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.loader-box:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+/* ==========================================================================
+   Terminal: scrollbar discreta, scanlines e cursor piscando
+   ========================================================================== */
+.term-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #3a2360 transparent;
+}
+.term-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.term-scroll::-webkit-scrollbar-thumb {
+  background: #3a2360;
+  border-radius: 3px;
+}
+
+.term-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.015) 0,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.term-grid {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.045) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.blink {
+  animation: blink 1.1s steps(1) infinite;
+}
+
+/* ==========================================================================
+   Acessibilidade: respeitar prefers-reduced-motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Galeria: entrada e hover só com transform/opacity (compositor, sem repaint)
+   ========================================================================== */
+.gallery-root {
+  cursor: grab;
+  contain: layout paint;
+}
+.gallery-root[data-dragging] {
+  cursor: grabbing;
+}
+.gallery-root[data-dragging] [data-card] {
+  pointer-events: none;
+}
+@keyframes gallery-in {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+}
+.gallery-art {
+  opacity: var(--o, 1);
+  animation: gallery-in 0.9s var(--ease-reveal) backwards;
+  transition:
+    transform 0.45s var(--ease-reveal),
+    opacity 0.45s var(--ease-reveal);
+}
+a:hover > .gallery-art,
+a:focus-visible > .gallery-art {
+  opacity: 1;
+  transform: scale(1.07);
+}
+
+/* ==========================================================================
+   Hologramas / HUD
+   ========================================================================== */
+.holo-glass {
+  background:
+    radial-gradient(ellipse at 50% 38%, rgba(140, 0, 242, 0.16), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(181, 101, 255, 0.28);
+  box-shadow:
+    inset 0 0 60px rgba(140, 0, 242, 0.18),
+    0 0 90px -20px rgba(140, 0, 242, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.text-glow {
+  text-shadow: 0 0 18px rgba(140, 0, 242, 0.85), 0 0 2px rgba(255, 255, 255, 0.6);
+}
